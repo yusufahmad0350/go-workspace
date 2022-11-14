@@ -99,7 +99,6 @@ func Calc(pairs chan pair, mat1, mat2, resultMat [][]int, wg *sync.WaitGroup, p 
 				resultMat[pair.row][pair.col] += mat1[pair.row][k] * mat2[k][pair.col]
 			}
 		}()
-
 	}
 
 	wg.Done()
