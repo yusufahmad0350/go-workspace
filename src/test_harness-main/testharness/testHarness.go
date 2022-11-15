@@ -65,7 +65,6 @@ func multiply(mat1 [][]int, mat2 [][]int) [][]int {
 	type pair struct {
 		row, col int
 	}
-
 	m := len(mat1)    // number of rows the first matrix
 	p := len(mat2)    // number of rows the second matrix
 	q := len(mat2[0]) // number of columns the second matrix
@@ -73,35 +72,26 @@ func multiply(mat1 [][]int, mat2 [][]int) [][]int {
 	for i := 0; i < m; i++ {
 		resultMat[i] = make([]int, q)
 	}
-	pairs := make(chan pair, 50000)
+	pairs := make(chan pair, m*m)
 	var wg sync.WaitGroup
-	//var mu sync.RWMutex
 	wg.Add(1)
 	for i := 0; i < 1; i++ {
 		go func(pairs chan pair) {
-			//wg.Add(1)
 			for {
-				//wg.Add(1)
 				pair, ok := <-pairs //Waiting for pair receive from pairs
 				if !ok {
 					break
 				}
-				//mu.Lock()
 				wg.Add(1)
 				go func() {
 					defer wg.Done()
-
 					for k := 0; k < p; k++ {
 						resultMat[pair.row][pair.col] += mat1[pair.row][k] * mat2[k][pair.col]
-
 					}
-					//mu.Unlock()
 				}()
 			}
-
 			wg.Done()
 		}(pairs)
-
 	}
 	for i := 0; i < m; i++ {
 		for j := 0; j < q; j++ {

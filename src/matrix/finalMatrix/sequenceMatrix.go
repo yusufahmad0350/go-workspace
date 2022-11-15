@@ -17,16 +17,16 @@ func main() {
 }
 func calculateMatrix() {
 	var wg sync.WaitGroup
-	for i := 0; i < 2; i++ {
-		matrixC[i] = make([]int, 2)
+	for i := 0; i < 10; i++ {
+		matrixC[i] = make([]int, 10)
 		wg.Add(1)
 		func(i int) {
 
-			for j := 0; j < 2; j++ {
+			for j := 0; j < 10; j++ {
 
 				go func(i, j int) {
 
-					for k := 0; k < 2; k++ {
+					for k := 0; k < 10; k++ {
 						matrixC[i][j] += matrixA[i][k] * matrixB[k][j]
 					}
 
@@ -39,6 +39,5 @@ func calculateMatrix() {
 	}
 	fmt.Print(matrixC)
 
-	// Swap this matrix
 
 }
