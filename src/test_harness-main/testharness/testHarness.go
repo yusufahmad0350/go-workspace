@@ -70,7 +70,9 @@ func multiply(mat1 [][]int, mat2 [][]int) [][]int {
 	q := len(mat2[0]) // number of columns the second matrix
 	resultMat := make([][]int, m)
 	for i := 0; i < m; i++ {
-		resultMat[i] = make([]int, q)
+		go func(i int) {
+			resultMat[i] = make([]int, q)
+		}(i)
 	}
 	pairs := make(chan pair, m*m)
 	var wg sync.WaitGroup
@@ -93,11 +95,13 @@ func multiply(mat1 [][]int, mat2 [][]int) [][]int {
 			wg.Done()
 		}(pairs)
 	}
+
 	for i := 0; i < m; i++ {
 		for j := 0; j < q; j++ {
 			pairs <- pair{row: i, col: j}
 		}
 	}
+
 	close(pairs)
 	wg.Wait()
 	return resultMat
