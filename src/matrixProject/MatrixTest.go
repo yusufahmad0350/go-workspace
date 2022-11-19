@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"sync"
 )
 
 func init() {
@@ -60,24 +61,26 @@ func doCalc(inA [][]int, inB [][]int) [][]int {
 	q := colCount(inB) // number of columns the second matrix
 	k := 0
 	total := 0
-	
-
 	var nM [][]int
 	nM = GenMat(m, q)
-	
-	for i = 0; i < m; i++ {
-		for j = 0; j < q; j++ {
-			for k = 0; k < p; k++ {
-				total = total + inA[i][k]*inB[k][j]
-				//      fmt.Print("(", inA[i][k], " * ", inB[k][j], ") + ")
+	wg sync.WaitGroup
+	go func() {
+		defer wg.Done()
+		for i = 0; i < m; i++ {
+
+			for j = 0; j < q; j++ {
+				for k = 0; k < p; k++ {
+					total = total + inA[i][k]*inB[k][j]
+					//      fmt.Print("(", inA[i][k], " * ", inB[k][j], ") + ")
+				}
+				//          fmt.Println("giving", total)
+				nM[i][j] = total
+				total = 0
 			}
-			//          fmt.Println("giving", total)
-			nM[i][j] = total
-			total = 0
+			fmt.Println()
 		}
-		fmt.Println()
-	}
+		
+	}()
+	wg.Wait()
 	return nM
 }
-
-
