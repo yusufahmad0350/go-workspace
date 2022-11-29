@@ -9,6 +9,7 @@ import (
 	"sync"
 )
 
+var m sync.Mutex
 var x = 0
 
 // Note pass by reference
@@ -21,7 +22,7 @@ func increment(wg *sync.WaitGroup, m *sync.Mutex) {
 
 }
 func main() {
-	var m sync.Mutex
+
 	var w sync.WaitGroup
 	for i := 0; i < 1000; i++ {
 		w.Add(1)

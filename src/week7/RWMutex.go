@@ -1,4 +1,5 @@
 package main
+
 import (
 	"fmt"
 	"math/rand"
@@ -6,6 +7,7 @@ import (
 	"sync"
 	"time"
 )
+
 func init() {
 	rand.Seed(time.Now().Unix())
 }
