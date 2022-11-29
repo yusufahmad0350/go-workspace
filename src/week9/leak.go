@@ -10,7 +10,7 @@ func main() {
 	leak()
 	leak()
 	leak()
-	leak()
+	//leak()
 	fmt.Scanln() // wait for Enter Key
 	fmt.Println("number of goroutines C", runtime.NumGoroutine())
 }

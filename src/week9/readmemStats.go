@@ -14,14 +14,16 @@ func main() {
 	fmt.Println("mem.TotalAlloc:", mem.TotalAlloc)
 	fmt.Println("mem.HeapAlloc:", mem.HeapAlloc)
 	fmt.Println("mem.NumGC:", mem.NumGC)
+	fmt.Println(mem.HeapSys)
 	leak()
 	leak()
 	leak()
+
 	fmt.Scanln() // wait for Enter Key
 	runtime.ReadMemStats(&mem)
-	fmt.Println(mem.Alloc)
-	fmt.Println(mem.TotalAlloc)
-	fmt.Println(mem.HeapAlloc)
+	fmt.Println("mem.Alloc:", mem.Alloc)
+	fmt.Println("mem.TotalAlloc:", mem.TotalAlloc)
+	fmt.Println("mem.HeapAlloc:", mem.HeapAlloc)
 	fmt.Println(mem.HeapSys)
 	fmt.Println("number of goroutines C", runtime.NumGoroutine())
 }
